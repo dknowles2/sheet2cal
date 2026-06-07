@@ -30,11 +30,9 @@ function openSettings() {
 // ── Main (home) card ──────────────────────────────────────────────────────────
 
 function buildMainCard() {
-  const sheetName    = PROPS.getProperty("sheetName")  || "";
-  const calendarId   = PROPS.getProperty("calendarId") || "";
-  const lastSync     = PROPS.getProperty("lastSync")   || "Never";
-
-  const calendarName = getCalendarName(calendarId);
+  const sheetName    = PROPS.getProperty("sheetName")    || "";
+  const calendarName = PROPS.getProperty("calendarName") || PROPS.getProperty("calendarId") || "";
+  const lastSync     = PROPS.getProperty("lastSync")     || "Never";
 
   const configSummary = CardService.newCardSection()
     .addWidget(
@@ -213,7 +211,8 @@ function applyConfig(e) {
   if (!fi.col_date)   return "A 'Date' column mapping is required.";
   if (!fi.col_title)  return "An 'Event Title' column mapping is required.";
 
-  const props = { sheetName: fi.sheetName, calendarId: fi.calendarId };
+  const calendarName = getCalendarName(fi.calendarId);
+  const props = { sheetName: fi.sheetName, calendarId: fi.calendarId, calendarName };
   FIELD_DEFS.forEach(({ key }) => { props[key] = fi[key] || ""; });
   PROPS.setProperties(props);
 
@@ -221,7 +220,7 @@ function applyConfig(e) {
 }
 
 function getCalendarName(calendarId) {
-  if (!calendarId) return "Not configured";
+  if (!calendarId) return "";
   try {
     const cal = CalendarApp.getCalendarById(calendarId);
     return cal ? cal.getName() : calendarId;
