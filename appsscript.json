@@ -10,7 +10,7 @@
   "addOns": {
     "common": {
       "name": "Sheet2Cal",
-      "logoUrl": "YOUR_HOSTED_ICON_URL",
+      "logoUrl": "https://raw.githubusercontent.com/dknowles2/sheet2cal/refs/heads/main/icon.svg",
       "homepageTrigger": {
         "runFunction": "buildHomepage",
         "enabled": true
